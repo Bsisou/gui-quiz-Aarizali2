@@ -1,12 +1,16 @@
 import tkinter as tk
+from PIL import Image, ImageTk
 
-window = tk.Tk()
-window.title("Hello world")
-window.geometry("300x300")
+root=tk.Tk()
 
-hello = tk.Label(text="Hello world!")
-hello.pack()
-button = tk.Button(text="Click me!")
-button.pack()
+image_path =("startingpage.png")
+image_path = Image.open(image_path)
+image_path = image_path.resize((450, 350), Image.LANCZOS) 
+image_path = ImageTk.PhotoImage(image_path)
 
-tk.mainloop()
+label = tk.Label(root, image=image_path)
+label.pack()
+
+
+
+root.mainloop()

@@ -2,16 +2,22 @@ from tkinter import*
 from PIL import Image, ImageTk
 
 class Quizstarter:
-  def __init__(self, root):
+  def __init__(self, parent):
     
      
 
              #Button       
-    self.continue_button = Button(root, text="Next", bg="#b8b4b4")
+    self.continue_button = Button(parent, text="Next", bg="#b8b4b4")
     self.continue_button.place(x=414, y=378)
 
     
- 
+    self.entry_box = Entry(parent)
+    self.entry_box.place(x=170, y=344)
+    
+
+   
+
+
 if __name__ == "__main__":
  root =Tk()
  root.title("Guess the footballer")

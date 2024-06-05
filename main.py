@@ -1,4 +1,5 @@
 from tkinter import*
+from typing import Self
 from PIL import Image, ImageTk
 
 class Quizstarter:
@@ -6,6 +7,7 @@ class Quizstarter:
   def __init__(self, parent):
 
     self.parent = parent
+    self.selected_option = IntVar() #selection option stored in an integer variable
   
              #Button       
     self.next_button = Button(parent, text="Next", bg="#b8b4b4",command=self.show_questions)
@@ -27,21 +29,22 @@ class Quizstarter:
     self.next_button.destroy()
     self.show_background(self.parent)
 
-
   #show backgrond for second page
   def show_background(self, parent):
       second_page_image_path = "secondpage.png"
       second_page_image = Image.open(second_page_image_path)
-      second_page_image = second_page_image.resize((500,450),Image.LANCZOS)
+      second_page_image = second_page_image.resize((700,450),Image.LANCZOS)
       self.second_page_image = ImageTk.PhotoImage(second_page_image)
       self.photoLabel2 = Label(self.parent, image=self.second_page_image)    
       self.photoLabel2.place(x=0,y=0, relheight=1, relwidth= 1)
 
 
+    #creating radio buttons for users to answer the question
+      option1 = Radiobutton(parent, text="Ronaldo", variable=self.selected_option, value=1)
 
-     
-
-
+ #place radiobuttons
+      option1.place(x=140, y=400)
+    
 
 if __name__ == "__main__":
  quiz =Tk()

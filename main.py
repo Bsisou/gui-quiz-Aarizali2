@@ -59,6 +59,23 @@ class Quizstarter:
 
       option4.place(x=540, y=400)
 
+     #submit answer button
+      submit_button = Button(parent, text="Submit", bg="white")
+      submit_button.place(x=340, y=460)
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
 if __name__ == "__main__":
  quiz =Tk()
  quiz.title("Guess the footballer")

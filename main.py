@@ -44,7 +44,20 @@ class Quizstarter:
 
  #place radiobuttons
       option1.place(x=140, y=400)
+
+
+      option2 = Radiobutton(parent, text="Ronaldino", variable=self.selected_option, value=2)
     
+      option2.place(x=140, y=440)
+
+
+      option3 = Radiobutton(parent, text="Ronaldinho", variable=self.selected_option, value=3)
+
+      option3.place(x=540, y=440)
+
+      option4 = Radiobutton(parent, text="Pogba", variable=self.selected_option, value=4)
+
+      option4.place(x=540, y=400)
 
 if __name__ == "__main__":
  quiz =Tk()

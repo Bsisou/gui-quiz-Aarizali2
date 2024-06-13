@@ -59,21 +59,26 @@ class Quizstarter:
 
       option4.place(x=540, y=400)
 
+    
      #submit answer button
-      submit_button = Button(parent, text="Submit", bg="white")
+      submit_button = Button(parent, text="Submit", bg="white", command=self.check_answer)
       submit_button.place(x=340, y=460)
 
 
+      self.feedback_label = Label(parent, fg="green", font=("Arial", 12))
+      self.feedback_label.place(x=340,y=425)
 
 
-
-
-
+  
+      #getting submit button to work
+  def check_answer(self):
+         correct_answer_value=3
+         user_answer = self.selected_option.get()
     
-
-
-
-
+         if user_answer == correct_answer_value:
+            self.feedback_label.config(text="Correct!",fg="green")
+         else:
+            self.feedback_label.config(text="Incorrect!",fg="red"
 
 
 if __name__ == "__main__":

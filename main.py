@@ -8,6 +8,8 @@ class Quizstarter:
 
     self.parent = parent
     self.selected_option = IntVar() #selection option stored in an integer variable
+
+
   
              #Button       
     self.next_button = Button(parent, text="Next", bg="#b8b4b4",command=self.show_questions)
@@ -18,8 +20,6 @@ class Quizstarter:
     self.entry_box = Entry(parent)
     self.entry_box.place(x=370, y=444, anchor="center")   
 
-
-  
 
 
   #hide first page``
@@ -45,11 +45,9 @@ class Quizstarter:
  #place radiobuttons
       option1.place(x=140, y=400)
 
-
       option2 = Radiobutton(parent, text="Ronaldino", variable=self.selected_option, value=2)
     
       option2.place(x=140, y=440)
-
 
       option3 = Radiobutton(parent, text="Ronaldinho", variable=self.selected_option, value=3)
 
@@ -64,6 +62,8 @@ class Quizstarter:
       submit_button = Button(parent, text="Submit", bg="white", command=self.check_answer)
       submit_button.place(x=340, y=460)
 
+      self.score_label = Label(parent, text="Score: 0", font=("Arial", 14))
+      self.score_label.place(x=100, y=80)
 
       self.feedback_label = Label(parent, fg="green", font=("Arial", 12))
       self.feedback_label.place(x=340,y=425)
@@ -78,6 +78,9 @@ class Quizstarter:
     
          if user_answer == correct_answer_value:
             self.feedback_label.config(text="Correct! You guessed right",fg="green")
+            #add 1 score every correct answer
+            self.score =1
+            self.score_label.config(text=f"Score: {self.score}")
          else:
             self.feedback_label.config(text="Incorrect! You guessed wrong",fg="red")
 
@@ -87,11 +90,9 @@ class Quizstarter:
               #destroy the first question page and make new one
       self.parent.destroy()
       quiz=Tk()
-      quiz.title("Guess the footballer")
+      quiz.title("second question page")
       quiz.geometry("750x550")
-              
-                                        
-                                       
+                            
 
 
 if __name__ == "__main__":

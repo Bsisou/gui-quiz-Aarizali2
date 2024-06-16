@@ -72,13 +72,26 @@ class Quizstarter:
   
       #getting submit button to work
   def check_answer(self):
+        #the value 3 is for the correct answer 
          correct_answer_value=3
          user_answer = self.selected_option.get()
     
          if user_answer == correct_answer_value:
-            self.feedback_label.config(text="Correct!",fg="green")
+            self.feedback_label.config(text="Correct! You guessed right",fg="green")
          else:
-            self.feedback_label.config(text="Incorrect!",fg="red"
+            self.feedback_label.config(text="Incorrect! You guessed wrong",fg="red")
+
+            #this means it takes around 2 seconds to go to the next question page
+         self.parent.after(2000, self.show_next_question)
+  def show_next_question(self):       
+              #destroy the first question page and make new one
+      self.parent.destroy()
+      quiz=Tk()
+      quiz.title("Guess the footballer")
+      quiz.geometry("750x550")
+              
+                                        
+                                       
 
 
 if __name__ == "__main__":

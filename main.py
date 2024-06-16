@@ -8,9 +8,12 @@ class Quizstarter:
 
     self.parent = parent
     self.selected_option = IntVar() #selection option stored in an integer variable
+   
 
+    #self.options_questions = [
+       # {"allpage.png": "ronaldinho.png", "options": ["Ronaldo", "Ronaldino", "Ronaldinho", "Pogba"], "answer":3}
+    #]
 
-  
              #Button       
     self.next_button = Button(parent, text="Next", bg="#b8b4b4",command=self.show_questions)
  
@@ -29,23 +32,37 @@ class Quizstarter:
     self.next_button.destroy()
     self.show_background(self.parent)
 
-  #show backgrond for second page
+  #show backgrond for all pages
   def show_background(self, parent):
-      second_page_image_path = "secondpage.png"
-      second_page_image = Image.open(second_page_image_path)
-      second_page_image = second_page_image.resize((700,450),Image.LANCZOS)
-      self.second_page_image = ImageTk.PhotoImage(second_page_image)
-      self.photoLabel2 = Label(self.parent, image=self.second_page_image)    
+      all_page_image_path = "allpage.png"
+      all_page_image = Image.open(all_page_image_path)
+      all_page_image = all_page_image.resize((700,450),Image.LANCZOS)
+      self.all_page_image = ImageTk.PhotoImage(all_page_image)
+      self.photoLabel2 = Label(self.parent, image=self.all_page_image)    
       self.photoLabel2.place(x=0,y=0, relheight=1, relwidth= 1)
+    
+     
+      #self.options_question()
 
+  #def options_question(self):
+      #question = self.options_questions
+
+  #update player image
+      #player_image_path = ["allpage.png"]
+      #player_image = Image.open(player_image_path)
+      #player_image = player_image.resize((200,200),Image.LANCZOS)
+      #self.player_image = ImageTk.PhotoImage(player_image)
+      #self.photoLabel2 = Label(self.parent, image=self.player_image)  
+      #self.photoLabel2.place(x=275,y=50)
+  
 
     #creating radio buttons for users to answer the question
-      option1 = Radiobutton(parent, text="Ronaldo", variable=self.selected_option, value=1)
+      option1 = Radiobutton(parent, text="ronaldo", variable=self.selected_option, value=3)
 
  #place radiobuttons
       option1.place(x=140, y=400)
 
-      option2 = Radiobutton(parent, text="Ronaldino", variable=self.selected_option, value=2)
+      option2 = Radiobutton(parent, text="pogba", variable=self.selected_option, value=2)
     
       option2.place(x=140, y=440)
 
@@ -53,7 +70,7 @@ class Quizstarter:
 
       option3.place(x=540, y=440)
 
-      option4 = Radiobutton(parent, text="Pogba", variable=self.selected_option, value=4)
+      option4 = Radiobutton(parent, text="messi", variable=self.selected_option, value=4)
 
       option4.place(x=540, y=400)
 
@@ -85,7 +102,7 @@ class Quizstarter:
             self.feedback_label.config(text="Incorrect! You guessed wrong",fg="red")
 
             #this means it takes around 2 seconds to go to the next question page
-         self.parent.after(2000, self.show_next_question)
+        # self.parent.after(2000, self.show_next_question)
   def show_next_question(self):       
               #destroy the first question page and make new one
       self.parent.destroy()

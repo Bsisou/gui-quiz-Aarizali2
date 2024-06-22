@@ -2,7 +2,7 @@ from tkinter import *
 from typing import Self
 from PIL import Image, ImageTk
 
-question_number = 0
+
 
 
 class Quizstarter:
@@ -10,10 +10,9 @@ class Quizstarter:
   def __init__(self, parent):
 
     self.parent = parent
-    self.selected_option = IntVar(
-    )  #selection option stored in an integer variable
-
+    self.selected_option = IntVar()#selection option stored in an integer variable
     self.all_page_bg_image = "allpage.png"
+    #self.quiz_page_bg_image = 
     self.options_questions = [
       {
         "question_image":
@@ -31,6 +30,18 @@ class Quizstarter:
       }
                              ]
 
+
+    self.current_question_index = 0
+    self.photoLabel = None
+    self.photoLabel2 = None
+    self.entry_box = None
+    self.next_button = None    
+    self.question_image_label = None  
+    self.options_buttons = []
+    self.submit_button = None
+    self.score_label = None  
+    self.feedback_label = None
+
     #Button
     self.next_button = Button(parent, text="Next",  bg="#b8b4b4",command=self.show_questions)
     
@@ -47,10 +58,11 @@ class Quizstarter:
     photoLabel.destroy()
     self.entry_box.destroy()
     self.next_button.destroy()
-    self.show_background(self.parent)
+    self.show_background(self)
 
   #show backgrond for all pages
   def show_background(self, parent):
+    
     all_page_image_path = "imgs/" + self.all_page_bg_image
     all_page_image = Image.open(all_page_image_path)
     all_page_image = all_page_image.resize((700, 450), Image.LANCZOS)
@@ -58,45 +70,32 @@ class Quizstarter:
     self.photoLabel2 = Label(self.parent, image=self.all_page_image)
     self.photoLabel2.place(x=0, y=0, relheight=1, relwidth=1)
 
-    print(self.options_questions[question_number]["question_image"])
-    self.question_image_path = Image.open(
-        "imgs/" + self.options_questions[question_number]["question_image"])
-    self.question_image = ImageTk.PhotoImage(
-        self.question_image_path.resize((100, 100), Image.LANCZOS))
-
-    self.question_image_label = Label(image=self.question_image)
-    self.question_image_label.place(relx=0.4, rely=0.2)
+    
+    self.show_next_questions()
+    
+  def show_next_questions(self):
+    if self.current_question_index < len(self.options_questions):
+      question_number = self.options_questions[self.current_question_index]
+ 
     
 
-    #creating radio buttons for users to answer the question
-    option1 = Radiobutton(
-    parent,
-    text=self.options_questions[question_number]["options"][0],
-    variable=self.selected_option,
-    value=1)
+   #show question image 
 
-    #place radiobuttons
-    option1.place(x=140, y=400)
+    self.question_image_path = Image.open("imgs/" + self.options_question_number["question_image"])
+    self.question_image = ImageTk.photoImage(self.question_image_path((100, 100), Image.LANCZOS))
+    self.question_image_label = Label(self.parent, image=self.question_image)
+    self.question_image_label.place(relx=0.4, rely=0.3)
+   
+    
+    question_number = self.options_questions[self.question_number]
 
-    option2 = Radiobutton(parent,
-    text=self.options_questions[question_number]["options"][1],
-    variable=self.selected_option,
-    value=2)
-    option2.place(x=140, y=440)
+    options = question_number["options"]
+    for i in range(len(options)):
+        option = Radiobutton(self.parent, text=options[i],
+        variable=self.selected_option, value =i+1)
+        option.place(x=140 +(i% 2) * 400, y=400 + (i // 2) *40)
+        self.options_button.append(option)
 
-    option3 = Radiobutton(parent,
-    text=self.options_questions[question_number]["options"][2],
-    variable=self.selected_option,
-    value=3)
-
-    option3.place(x=540, y=440)
-
-    option4 = Radiobutton(parent,
-    text=self.options_questions[question_number]["options"][3],
-    variable=self.selected_option,
-    value=4)
-
-    option4.place(x=540, y=400)
 
     #submit answer button
     submit_button = Button(parent,text="Submit", bg="white",command=self.check_answer)
@@ -126,13 +125,10 @@ class Quizstarter:
       #this means it takes around 2 seconds to go to the next question page
     self.parent.after(2000, self.show_next_question)
 
-  def show_next_question(self):
+ 
     #question_number = question_number + 1
     #destroy the first question page and make new one
-    self.parent.destroy()
-    quiz = Tk()
-    quiz.title("second question page")
-    quiz.geometry("750x550")
+    
 
 
 if __name__ == "__main__":

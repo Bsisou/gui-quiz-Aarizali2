@@ -11,12 +11,12 @@ class Quizstarter:
         self.options_questions = [
             {
                 "question_image": "ronaldinho.png",
-                "options": ["Ronaldo", "Ronaldino", "Ronaldinho", "Pogba"],
+                "options": ["Gianluigi Buffon", "Ronaldino", "Ronaldinho Gaúcho", "Paul Pogba"],
                 "answer": 3
             },
             {
                 "question_image": "mbappe.png",
-                "options": ["Ronaldo", "Ronaldino", "Mbappe", "Pogba"],
+                "options": ["Cristiano Ronaldo", "Ronaldinho Gaúcho", "Kylian Mbappé", "Gerard Piqué"],
                 "answer": 3
             },
             {
@@ -54,6 +54,12 @@ class Quizstarter:
                 "options": ["Emiliano Martínez", "Jan Oblak", "Thibaut Courtois", "Franck Ribéry"],
                 "answer": 1
             },
+
+            {
+                "question_image": "Henry.png",
+                "options": ["Iker Casillas", "Ángel Di María", "Oliver Kahn", "Thierry Henry"],
+                "answer": 4
+            },
         ]
 
         self.current_question_index = 0
@@ -87,7 +93,7 @@ class Quizstarter:
     def show_background(self):
         all_page_image_path = "imgs/" + self.all_page_bg_image
         all_page_image = Image.open(all_page_image_path)
-        all_page_image = all_page_image.resize((700, 450), Image.LANCZOS)
+        all_page_image = all_page_image.resize((720, 520), Image.LANCZOS)
         self.all_page_image = ImageTk.PhotoImage(all_page_image)
         self.photoLabel2 = Label(self.parent, image=self.all_page_image)
         self.photoLabel2.place(x=0, y=0, relheight=1, relwidth=1)
@@ -108,9 +114,9 @@ class Quizstarter:
 
             # show question image, cycles through imgs folder for images
             self.question_image_path = Image.open("imgs/" + question_data["question_image"])
-            self.question_image = ImageTk.PhotoImage(self.question_image_path.resize((250, 175), Image.LANCZOS))
+            self.question_image = ImageTk.PhotoImage(self.question_image_path.resize((350, 200), Image.LANCZOS))
             self.question_image_label = Label(self.parent, image=self.question_image)
-            self.question_image_label.place(relx=0.35, rely=0.2)
+            self.question_image_label.place(relx=0.2698, rely=0.155)
 
             # Radio buttons
             options = question_data["options"]
@@ -127,13 +133,14 @@ class Quizstarter:
             # Score
             if not self.score_label:
                 self.score_label = Label(self.parent, text=f"Score: {self.score}", font=("Arial", 14))
-                self.score_label.place(x=100, y=80)
+                self.score_label.place(x=100, y=50)
             else:
                 self.score_label.config(text=f"Score: {self.score}")
 
             self.feedback_label = Label(self.parent, fg="green", font=("Arial", 12))
             self.feedback_label.place(x=340, y=425)
-
+        else:
+            self.show_final_score()
     def check_answer(self):
         # checks through the dictionary for the correct answer
         question_data = self.options_questions[self.current_question_index]
@@ -146,14 +153,15 @@ class Quizstarter:
             self.score += 1
         else:
             self.feedback_label.config(text="Incorrect! You guessed wrong", fg="red")
-
+            
         self.score_label.config(text=f"Score: {self.score}")
         self.current_question_index += 1
-
+     
         # this means it takes around 2 seconds to go to the next question page
         self.parent.after(2000, self.show_next_questions)
 
     def show_final_score(self):
+         # Clear all existing widgets from the parent window
         for widget in self.parent.winfo_children():
             widget.destroy()
 

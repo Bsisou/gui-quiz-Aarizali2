@@ -122,7 +122,7 @@ class Quizstarter:
             options = question_data["options"]
             self.options_buttons = []
             for i in range(len(options)):
-                option = Radiobutton(self.parent, text=options[i], variable=self.selected_option, value=i + 1)
+                option = Radiobutton(self.parent, text=options[i], variable=self.selected_option, value=i + 1,  padx=10, pady=5)
                 option.place(x=140 + (i % 2) * 400, y=400 + (i // 2) * 40)
                 self.options_buttons.append(option)
 

@@ -64,6 +64,7 @@ class Quizstarter:
 
         self.current_question_index = 0
         self.score = 0
+        self.selected_answer = [-1] * len(self.options_questions)
         self.photoLabel = None
         self.photoLabel2 = None
         self.entry_box = None
@@ -122,9 +123,16 @@ class Quizstarter:
             options = question_data["options"]
             self.options_buttons = []
             for i in range(len(options)):
-                option = Radiobutton(self.parent, text=options[i], variable=self.selected_option, value=i + 1,  padx=10, pady=5)
+                option = Radiobutton(self.parent, text=options[i], variable=self.selected_option, value=i + 1, indicatoron=0, padx=10, pady=5)
                 option.place(x=140 + (i % 2) * 400, y=400 + (i // 2) * 40)
                 self.options_buttons.append(option)
+
+             #remove selected answer from previous question
+
+            if self.selected_answer[self.current_question_index] != -1:
+                self.selected_option.set(self.selected_answer[self.current_question_index])
+            else:
+                self.selected_option.set(0)
 
             # submit answer button
             self.submit_button = Button(self.parent, text="Submit", bg="white", command=self.check_answer)
@@ -146,6 +154,8 @@ class Quizstarter:
         question_data = self.options_questions[self.current_question_index]
         correct_answer = question_data["answer"]
         user_answer = self.selected_option.get()
+
+       
 
         # prints correct or incorrect depending on user's answer
         if user_answer == correct_answer:

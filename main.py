@@ -8,6 +8,7 @@ class Quizstarter:
         self.parent = parent
         self.selected_option = IntVar()  # selection option stored in an integer variable
         self.all_page_bg_image = "allpage.png"
+        #dictionary to store the question, answer and page number
         self.options_questions = [
             {
                 "question_image": "ronaldinho.png",
@@ -123,7 +124,7 @@ class Quizstarter:
             options = question_data["options"]
             self.options_buttons = []
             for i in range(len(options)):
-                option = Radiobutton(self.parent, text=options[i], variable=self.selected_option, value=i + 1, indicatoron=0, padx=10, pady=5)
+                option = Radiobutton(self.parent, text=options[i], variable=self.selected_option, value=i + 1, indicatoron=0, padx=10, pady=5,fg= "black", bg="#A1D9EC")
                 option.place(x=140 + (i % 2) * 400, y=400 + (i // 2) * 40)
                 self.options_buttons.append(option)
 
@@ -146,7 +147,7 @@ class Quizstarter:
                 self.score_label.config(text=f"Score: {self.score}")
 
             self.feedback_label = Label(self.parent, fg="green", font=("Arial", 12))
-            self.feedback_label.place(x=340, y=425)
+            self.feedback_label.place(x=275, y=440)
         else:
             self.show_final_score()
     def check_answer(self):
@@ -168,13 +169,14 @@ class Quizstarter:
         self.current_question_index += 1
      
         # this means it takes around 2 seconds to go to the next question page
-        self.parent.after(2000, self.show_next_questions)
+        self.parent.after(5000, self.show_next_questions)
 
     def show_final_score(self):
          # Clear all existing widgets from the parent window
         for widget in self.parent.winfo_children():
             widget.destroy()
 
+#prints final score once quiz is completed         
         final_score_label = Label(self.parent, text=f"Score: {self.score}", font="Arial 20 bold")
         final_score_label.place(relx=0.5, rely=0.4, anchor="center")
 

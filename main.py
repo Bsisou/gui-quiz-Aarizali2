@@ -7,7 +7,9 @@ class Quizstarter:
     def __init__(self, parent):
         self.parent = parent
         self.selected_option = IntVar()  # selection option stored in an integer variable
-        self.all_page_bg_image = "allpage.png"
+        
+        self.all_page_bg_image = "allpage.png"  #background for all question pages
+        
         #dictionary to store the question, answer and page number
         self.options_questions = [
             {
@@ -63,9 +65,9 @@ class Quizstarter:
             },
         ]
 
-        self.current_question_index = 0
+        self.current_question_index = 0  #to keep track of current question
         self.score = 0
-        self.selected_answer = [-1] * len(self.options_questions)
+        self.selected_answer = [-1] * len(self.options_questions)  #store selected answers
         self.photoLabel = None
         self.photoLabel2 = None
         self.entry_box = None
@@ -100,12 +102,16 @@ class Quizstarter:
         self.photoLabel2 = Label(self.parent, image=self.all_page_image)
         self.photoLabel2.place(x=0, y=0, relheight=1, relwidth=1)
 
-        self.show_next_questions()
+        self.show_next_questions()  #show first question 
 
+
+    # shows next question
     def show_next_questions(self):
         if self.current_question_index < len(self.options_questions):
             question_data = self.options_questions[self.current_question_index]
 
+       #removes previous button, label and image if exists
+            
             if self.question_image_label:
                 self.question_image_label.destroy()
             for btn in self.options_buttons:
@@ -124,7 +130,7 @@ class Quizstarter:
             options = question_data["options"]
             self.options_buttons = []
             for i in range(len(options)):
-                option = Radiobutton(self.parent, text=options[i], variable=self.selected_option, value=i + 1, indicatoron=0, padx=10, pady=5,fg= "black", bg="#A1D9EC")
+                option = Radiobutton(self.parent, text=options[i], variable=self.selected_option, value=i + 1, indicatoron=0, padx=10, pady=5,fg= "black", bg="#A1D9EC", width =14)
                 option.place(x=140 + (i % 2) * 400, y=400 + (i // 2) * 40)
                 self.options_buttons.append(option)
 
@@ -141,7 +147,7 @@ class Quizstarter:
 
             # Score
             if not self.score_label:
-                self.score_label = Label(self.parent, text=f"Score: {self.score}", font=("Arial", 14))
+                self.score_label = Label(self.parent, text=f"Score: {self.score}", font=("Arial", 14,))
                 self.score_label.place(x=100, y=50)
             else:
                 self.score_label.config(text=f"Score: {self.score}")
@@ -149,12 +155,14 @@ class Quizstarter:
             self.feedback_label = Label(self.parent, fg="green", font=("Arial", 12))
             self.feedback_label.place(x=275, y=440)
         else:
-            self.show_final_score()
+            self.show_final_score()  #shows final score once questions completed
+
+    
     def check_answer(self):
         # checks through the dictionary for the correct answer
-        question_data = self.options_questions[self.current_question_index]
-        correct_answer = question_data["answer"]
-        user_answer = self.selected_option.get()
+        question_data = self.options_questions[self.current_question_index]  #gets the question data
+        correct_answer = question_data["answer"]  #gets the right answer
+        user_answer = self.selected_option.get()  #gets the users answer and checks with right answer
 
        
 
@@ -165,7 +173,7 @@ class Quizstarter:
         else:
             self.feedback_label.config(text="Incorrect! You guessed wrong", fg="red")
             
-        self.score_label.config(text=f"Score: {self.score}")
+        self.score_label.config(text=f"Score: {self.score}")  #updates score label
         self.current_question_index += 1
      
         # this means it takes around 2 seconds to go to the next question page
@@ -176,7 +184,7 @@ class Quizstarter:
         for widget in self.parent.winfo_children():
             widget.destroy()
 
-#prints final score once quiz is completed         
+#displays final score once quiz is completed         
         final_score_label = Label(self.parent, text=f"Score: {self.score}", font="Arial 20 bold")
         final_score_label.place(relx=0.5, rely=0.4, anchor="center")
 

@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import font
 from PIL import Image, ImageTk
 
 
@@ -14,12 +15,14 @@ class Quizstarter:
         self.options_questions = [
             {
                 "question_image": "ronaldinho.png",
-                "options": ["Gianluigi Buffon", "Ronaldino", "Ronaldinho Gaúcho", "Paul Pogba"],
+                "options": ["Gianluigi Buffon", "Ronaldino", "Ronaldinho Gaúcho", 
+                            "Paul Pogba"],
                 "answer": 3
             },
             {
                 "question_image": "mbappe.png",
-                "options": ["Cristiano Ronaldo", "Ronaldinho Gaúcho", "Kylian Mbappé", "Gerard Piqué"],
+                "options": ["Cristiano Ronaldo", "Ronaldinho Gaúcho", "Kylian Mbappé", 
+                            "Gerard Piqué"],
                 "answer": 3
             },
             {
@@ -29,38 +32,45 @@ class Quizstarter:
             },
             {
                 "question_image": "Iniesta.png",
-                "options": ["Gianluigi Buffon", "Andrés Iniesta", "Kevin De Bruyne", "Arjen Robben"],
+                "options": ["Gianluigi Buffon", "Andrés Iniesta", "Kevin De Bruyne", 
+                            "Arjen Robben"],
                 "answer": 2
             },
             {
                 "question_image": "Bastian.png",
-                "options": ["Mario Götze", " Bastian Schweinsteiger", "Marco Reus", "Manuel Neuer"],
+                "options": ["Mario Götze", " Bastian Schweinsteiger", "Marco Reus", 
+                            "Manuel Neuer"],
                 "answer": 2
             },
             {
                 "question_image": "antoine.png",
-                "options": ["Antoine Griezmann", "Sergio Busquets", "Alexis Sánchez", "Marco Reus"],
+                "options": ["Antoine Griezmann", "Sergio Busquets", "Alexis Sánchez",
+                            "Marco Reus"],
                 "answer": 1
             },
             {
                 "question_image": "Ozil.png",
-                "options": [" Iker Casillas", "Sergio Agüero", "Arjen Robben", "mesut özil"],
+                "options": [" Iker Casillas", "Sergio Agüero", "Arjen Robben", 
+                            "mesut özil"],
                 "answer": 4
             },
             {
                 "question_image": "blerim.png",
-                "options": ["Henrikh Mkhitaryan", "blerim džemaili", "Yaya Touré", "Philippe Coutinho"],
+                "options": ["Henrikh Mkhitaryan", "blerim džemaili", "Yaya Touré", 
+                            "Philippe Coutinho"],
                 "answer": 2
             },
             {
                 "question_image": "Emiliano.png",
-                "options": ["Emiliano Martínez", "Jan Oblak", "Thibaut Courtois", "Franck Ribéry"],
+                "options": ["Emiliano Martínez", "Jan Oblak", "Thibaut Courtois", 
+                            "Franck Ribéry"],
                 "answer": 1
             },
 
             {
                 "question_image": "Henry.png",
-                "options": ["Iker Casillas", "Ángel Di María", "Oliver Kahn", "Thierry Henry"],
+                "options": ["Iker Casillas", "Ángel Di María", "Oliver Kahn", 
+                            "Thierry Henry"],
                 "answer": 4
             },
         ]
@@ -77,21 +87,33 @@ class Quizstarter:
         self.submit_button = None
         self.score_label = None
         self.feedback_label = None
+        self.error_label=None
 
+        
         # Button
-        self.next_button = Button(parent, text="Next", bg="#b8b4b4", command=self.show_questions)
-        self.next_button.place(x=720, y=535, anchor="se")
+        self.next_button = Button(parent, text="Next", bg="#b8b4b4", command=self.confirm_name)
+        self.next_button.place(x=720, y=535, anchor="se", width=120, height=50)
 
         # name entry box
         self.entry_box = Entry(parent)
-        self.entry_box.place(x=370, y=444, anchor="center")
+        self.entry_box.place(x=370, y=444, anchor="center",)
 
-    # hide first page``
-    def show_questions(self):
-        photoLabel.destroy()
-        self.entry_box.destroy()
-        self.next_button.destroy()
-        self.show_background()
+     
+        self.error_label= Label(parent,fg="red")
+        self.error_label.place(x=370, y=500, anchor="center",)
+
+#confirms if the user has enter a named into the entry box or not
+    def confirm_name(self):
+        validate_name = self.entry_box.get().strip()
+        if not validate_name:
+            self.error_label.config(text="Please enter your name", font=("Arial",14,"bold"))
+        else:
+            self.error_label.config(text="")
+            self.entry_box.destroy()
+            self.next_button.destroy()
+            self.show_background()
+
+        
 
     # show background for all pages
     def show_background(self):
@@ -130,7 +152,11 @@ class Quizstarter:
             options = question_data["options"]
             self.options_buttons = []
             for i in range(len(options)):
-                option = Radiobutton(self.parent, text=options[i], variable=self.selected_option, value=i + 1, indicatoron=0, padx=10, pady=5,fg= "black", bg="#A1D9EC", width =14)
+                option = Radiobutton(self.parent, text=options[i], 
+                variable=self.selected_option, value=i + 1, indicatoron=0, 
+                padx=10, pady=5,fg= "black", bg="#A1D9EC", width =14)
+
+                
                 option.place(x=140 + (i % 2) * 400, y=400 + (i // 2) * 40)
                 self.options_buttons.append(option)
 
@@ -142,12 +168,14 @@ class Quizstarter:
                 self.selected_option.set(0)
 
             # submit answer button
-            self.submit_button = Button(self.parent, text="Submit", bg="white", command=self.check_answer)
+            self.submit_button = Button(self.parent, text="Submit", bg="#A1D9EC", 
+                                        command=self.check_answer)
             self.submit_button.place(x=340, y=460)
 
             # Score
             if not self.score_label:
-                self.score_label = Label(self.parent, text=f"Score: {self.score}", font=("Arial", 14,))
+                self.score_label = Label(self.parent, text=f"Score: {self.score}",
+                                         font=("Arial", 14,), bg="#5271FF")
                 self.score_label.place(x=100, y=50)
             else:
                 self.score_label.config(text=f"Score: {self.score}")
@@ -176,8 +204,8 @@ class Quizstarter:
         self.score_label.config(text=f"Score: {self.score}")  #updates score label
         self.current_question_index += 1
      
-        # this means it takes around 2 seconds to go to the next question page
-        self.parent.after(5000, self.show_next_questions)
+        # this means it takes around 3 seconds to go to the next question page
+        self.parent.after(3000, self.show_next_questions)
 
     def show_final_score(self):
          # Clear all existing widgets from the parent window

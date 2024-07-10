@@ -89,18 +89,31 @@ class Quizstarter:
         self.feedback_label = None
         self.error_label=None
 
+
         
+         #max characters user is able to enter in entry box
+        self.entry_validate_command = self.parent.register(self.max_characters_length)
+        self.max_character = 15
         # Button
         self.next_button = Button(parent, text="Next", bg="#b8b4b4", command=self.confirm_name)
         self.next_button.place(x=720, y=535, anchor="se", width=120, height=50)
 
+        
+
         # name entry box
-        self.entry_box = Entry(parent)
-        self.entry_box.place(x=370, y=444, anchor="center",)
+        self.entry_box = Entry(parent,validate="key", validatecommand=(self.entry_validate_command,'%P'))
+        self.entry_box.place(x=370, y=444, anchor="center")
 
      
         self.error_label= Label(parent,fg="red")
-        self.error_label.place(x=370, y=500, anchor="center",)
+        self.error_label.place(x=370, y=500, anchor="center")
+
+    def max_characters_length(self, new_text):
+        if len(new_text) > self.max_character:
+            return False
+        return True
+
+    
 
 #confirms if the user has enter a named into the entry box or not
     def confirm_name(self):

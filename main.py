@@ -1,3 +1,4 @@
+import re
 from tkinter import *
 from tkinter import font
 from PIL import Image, ImageTk
@@ -89,7 +90,6 @@ class Quizstarter:
         self.feedback_label = None
         self.error_label=None
         self.warning_label= None
-
         
          #max characters user is able to enter in entry box
         self.entry_validate_command = self.parent.register(self.max_characters_length)
@@ -117,6 +117,9 @@ class Quizstarter:
             return False
         return True
 
+    def only_alphaletters(self,new_text):
+        return re.match("[a-zA-Z]+$", new_text) is not None
+
     
 
 #confirms if the user has enter a named into the entry box or not
@@ -124,6 +127,8 @@ class Quizstarter:
         validate_name = self.entry_box.get().strip()
         if not validate_name:
             self.error_label.config(text="Please enter your name", font=("Arial",14,"bold"))
+        elif not self.only_alphaletters(validate_name):
+            self.error_label.config(text="Please enter only alphabetical letters", font=("Arial",14,"bold"))
         else:
             self.error_label.config(text="")
             self.entry_box.destroy()

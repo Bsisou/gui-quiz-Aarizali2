@@ -88,12 +88,14 @@ class Quizstarter:
         self.score_label = None
         self.feedback_label = None
         self.error_label=None
-
+        self.warning_label= None
 
         
          #max characters user is able to enter in entry box
         self.entry_validate_command = self.parent.register(self.max_characters_length)
         self.max_character = 15
+
+        
         # Button
         self.next_button = Button(parent, text="Next", bg="#b8b4b4", command=self.confirm_name)
         self.next_button.place(x=720, y=535, anchor="se", width=120, height=50)
@@ -104,10 +106,12 @@ class Quizstarter:
         self.entry_box = Entry(parent,validate="key", validatecommand=(self.entry_validate_command,'%P'))
         self.entry_box.place(x=370, y=444, anchor="center")
 
-     
+     #places and my error message and displays it in red
         self.error_label= Label(parent,fg="red")
         self.error_label.place(x=370, y=500, anchor="center")
 
+
+    #checks for the max character limit of 15
     def max_characters_length(self, new_text):
         if len(new_text) > self.max_character:
             return False
@@ -154,6 +158,9 @@ class Quizstarter:
 
             if self.feedback_label:
                 self.feedback_label.destroy()
+            if self.warning_label:
+                self.warning_label.destroy()
+                
 
             # show question image, cycles through imgs folder for images
             self.question_image_path = Image.open("imgs/" + question_data["question_image"])
@@ -200,12 +207,20 @@ class Quizstarter:
 
     
     def check_answer(self):
+
+        #checks if the user has selected an answer
+        if self.selected_option.get() == 0:
+            if not self.warning_label:
+                self.warning_label = Label(self.parent, text="please select an answer",
+                                           fg="red", font=("Arial", 14, "bold"))
+                self.warning_label.place(x=310, y=500)
+            return
+                
         # checks through the dictionary for the correct answer
         question_data = self.options_questions[self.current_question_index]  #gets the question data
         correct_answer = question_data["answer"]  #gets the right answer
         user_answer = self.selected_option.get()  #gets the users answer and checks with right answer
 
-       
 
         # prints correct or incorrect depending on user's answer
         if user_answer == correct_answer:
